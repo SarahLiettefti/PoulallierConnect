@@ -1,0 +1,358 @@
+[
+    {
+        "id": "d79d1134a66dc7fb",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "24cf8c2122385372",
+        "type": "mqtt in",
+        "z": "d79d1134a66dc7fb",
+        "name": "poule",
+        "topic": "#",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "31fbe8aec2a4d41d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 90,
+        "y": 280,
+        "wires": [
+            [
+                "9ce6d92fa4e127bf",
+                "48609c2868a9bcb8",
+                "869e8d7297dc1858",
+                "94b4d943522bd2f1",
+                "14ad4d7af9463f30",
+                "46f23e1e7011e6e4"
+            ]
+        ]
+    },
+    {
+        "id": "9ce6d92fa4e127bf",
+        "type": "debug",
+        "z": "d79d1134a66dc7fb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 310,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "fe4aff58c03984c7",
+        "type": "template",
+        "z": "d79d1134a66dc7fb",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html>\n<head>\n<!-- HTML Codes by Quackit.com -->\n<title>\n    Poulailler connecté\n</title>\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<style>\nbody {background-color:#ffffff;background-repeat:no-repeat;background-position:top left;background-attachment:fixed;}\nh1{font-family:Arial, sans-serif;color:#000000;background-color:#ffffff;}\np {font-family:Georgia, serif;font-size:20px;font-style:normal;font-weight:normal;color:#000000;background-color:#ffffff;}\n</style>\n</head>\n<body>\n<h1>Poulailler connecté</h1>\n<h2>Date et heure : {{flow.dateclock}}</h2>\n<p>Nombre de poules : {{flow.poule}}/{{flow.pouletot}}</p>\n<p>Luminosité : {{flow.luminosite}} %</p>\n<p>Status porte : {{flow.porte}}</p>\n<p><img src=\"https://image.freepik.com/vecteurs-libre/poulailler-bois_1308-8806.jpg\" alt=\"Photo poulailler\" /></a></p>\n</body>\n</html>\n",
+        "output": "str",
+        "x": 760,
+        "y": 600,
+        "wires": [
+            [
+                "8407b643201da570"
+            ]
+        ]
+    },
+    {
+        "id": "4453727546840284",
+        "type": "http in",
+        "z": "d79d1134a66dc7fb",
+        "name": "",
+        "url": "/poule",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 560,
+        "y": 600,
+        "wires": [
+            [
+                "fe4aff58c03984c7"
+            ]
+        ]
+    },
+    {
+        "id": "8407b643201da570",
+        "type": "http response",
+        "z": "d79d1134a66dc7fb",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 910,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "48609c2868a9bcb8",
+        "type": "change",
+        "z": "d79d1134a66dc7fb",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "poule",
+                "pt": "flow",
+                "to": "payload.uplink_message.decoded_payload.nbPoule",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 400,
+        "wires": [
+            [
+                "fe4aff58c03984c7"
+            ]
+        ]
+    },
+    {
+        "id": "24002e17f392e75d",
+        "type": "template",
+        "z": "d79d1134a66dc7fb",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"utf-8\" />\n        <title>Poulailler connecté</title>\n        <link rel=\"stylesheet\" url= \"https://github.com/Bengali4/chicken/blob/c6bbcd6835541bbd03a600c81e118ca407ed9544/style.css\" />\n    </head>\n\n    <body>\n        <p><img src=\"https://image.freepik.com/vecteurs-libre/poulailler-bois_1308-8806.jpg\" alt=\"Photo d'identité Mathieu Nebra\" /></a></p>\n        \n        <h1>Poulailler connecté</h1>\n        <p>Entrepreneur, auteur et co-fondateur d'OpenClassrooms</p>\n\n        \n\n        <h2>Mon expérience</h2>\n\n        <ul>\n            <li><strong>De 1999 à 2007</strong> : fondateur du Site du Zéro, site de cours en ligne pour débutants. Animation le soir et le week-end en parallèle de mes études.</li>\n            <li><strong>De 2007 à 2013</strong> : création de Simple IT, start-up éditrice du Site du Zéro. Lancement d'une collection de livres. Evolution du site jusqu'à 2 millions de visiteurs par mois, avec 20 employés.</li>\n            <li><strong>De 2014 à aujourd'hui</strong> : transformation de Simple IT et du Site du Zéro en une marque unique et globale, OpenClassrooms. Internationalisation, lancement de cours vidéo, d'une collection d'eBooks à la demande et de certificats en ligne.</li>\n        </ul>\n\n        <h2>Mes compétences</h2>\n\n        <ul>\n            <li>HTML5 et CSS3</li>\n            <li>PHP (<a href=\"http://certifications.openclassrooms.com/OC-133423525\">certificat OpenClassrooms</a>)</li>\n            <li>SQL</li>\n            <li>Super Smash Bros (niveau expert)</li>\n        </ul>\n\n        <h2>Ma formation</h2>\n\n        <p>Alors là c'est simple... j'ai tout appris sur OpenClassrooms !</p>\n\n    </body>\n</html>",
+        "output": "str",
+        "x": 480,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "50e18b5c96381ea7",
+        "type": "template",
+        "z": "d79d1134a66dc7fb",
+        "name": "",
+        "field": "style",
+        "fieldType": "msg",
+        "format": "css",
+        "syntax": "mustache",
+        "template": "@font-face \n{\n    font-family: 'droid_sansregular';\n    src: url('DroidSans-webfont.eot');\n    src: url('DroidSans-webfont.eot?#iefix') format('embedded-opentype'),\n         url('DroidSans-webfont.woff') format('woff'),\n         url('DroidSans-webfont.ttf') format('truetype'),\n         url('DroidSans-webfont.svg#droid_sansregular') format('svg');\n    font-weight: normal;\n    font-style: normal;\n\n}\n\nbody\n{\n    background-image: url('https://fr.freepik.com/vecteurs-libre/poulailler-bois_1846889.htm');\n}\n\nh1, h2\n{\n    font-family: 'droid_sansregular', 'Arial', sans-serif;\n}\n\nh1, h1 + p\n{\n    text-align: center;\n}\n\nimg\n{\n    float: right;\n    border: 1px solid black;\n    box-shadow: 2px 2px 2px black;\n}\n\nh2\n{\n    color: #6E4A46;\n}",
+        "output": "str",
+        "x": 320,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "869e8d7297dc1858",
+        "type": "change",
+        "z": "d79d1134a66dc7fb",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "luminosite",
+                "pt": "flow",
+                "to": "payload.uplink_message.decoded_payload.luminosite",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 330,
+        "y": 460,
+        "wires": [
+            [
+                "fe4aff58c03984c7"
+            ]
+        ]
+    },
+    {
+        "id": "3fe66fe4c4cc5051",
+        "type": "change",
+        "z": "d79d1134a66dc7fb",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "porte",
+                "pt": "flow",
+                "to": "payload.uplink_message.decoded_payload.portebool",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 520,
+        "wires": [
+            [
+                "fe4aff58c03984c7"
+            ]
+        ]
+    },
+    {
+        "id": "94b4d943522bd2f1",
+        "type": "moment",
+        "z": "d79d1134a66dc7fb",
+        "name": "",
+        "topic": "",
+        "input": "payload.uplink_message.decoded_payload.timestamp",
+        "inputType": "msg",
+        "inTz": "Europe/Brussels",
+        "adjAmount": 0,
+        "adjType": "days",
+        "adjDir": "add",
+        "format": "DD/MM/YYYY HH:mm:ss",
+        "locale": "fr-FR",
+        "output": "",
+        "outputType": "msg",
+        "outTz": "Europe/Brussels",
+        "x": 340,
+        "y": 340,
+        "wires": [
+            [
+                "4f17b1c2997ca24c"
+            ]
+        ]
+    },
+    {
+        "id": "4f17b1c2997ca24c",
+        "type": "change",
+        "z": "d79d1134a66dc7fb",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "dateclock",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 340,
+        "wires": [
+            [
+                "fe4aff58c03984c7"
+            ]
+        ]
+    },
+    {
+        "id": "14ad4d7af9463f30",
+        "type": "change",
+        "z": "d79d1134a66dc7fb",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload.uplink_message.decoded_payload.portebool",
+                "pt": "msg",
+                "from": "true",
+                "fromt": "bool",
+                "to": "Ouverte",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload.uplink_message.decoded_payload.portebool",
+                "pt": "msg",
+                "from": "false",
+                "fromt": "bool",
+                "to": "Fermée",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 520,
+        "wires": [
+            [
+                "3fe66fe4c4cc5051"
+            ]
+        ]
+    },
+    {
+        "id": "46f23e1e7011e6e4",
+        "type": "change",
+        "z": "d79d1134a66dc7fb",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "pouletot",
+                "pt": "flow",
+                "to": "11",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 580,
+        "wires": [
+            [
+                "fe4aff58c03984c7"
+            ]
+        ]
+    },
+    {
+        "id": "31fbe8aec2a4d41d",
+        "type": "mqtt-broker",
+        "name": "TTN",
+        "broker": "eu1.cloud.thethings.network",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    }
+]
